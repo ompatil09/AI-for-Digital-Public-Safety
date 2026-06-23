@@ -144,27 +144,6 @@ $env:NEO4J_PASSWORD="sentinel123"
 
 If these variables are missing or Neo4j is unavailable, Sentinel AI uses in-memory storage so the app still runs locally.
 
-## Environment Variables
-
-Backend:
-
-```text
-NEO4J_URI=bolt://localhost:7687
-NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=sentinel123
-OPENAI_API_KEY=
-OPENAI_MODEL=gpt-4.1-mini
-GEMINI_API_KEY=
-GEMINI_MODEL=gemini-1.5-flash
-```
-
-Frontend:
-
-```text
-VITE_API_BASE_URL=http://127.0.0.1:8000
-```
-
-OpenAI/Gemini keys are optional. If no key exists, the deterministic rule-based analyzer is used.
 
 ## API Endpoints
 
@@ -256,40 +235,6 @@ Expected:
 - Dataset match summary with similar CSV examples
 - Risk score boosted by pattern knowledge match
 
-## Validation Commands
-
-Backend health:
-
-```powershell
-curl.exe http://127.0.0.1:8000/api/health
-```
-
-Analyze safe message:
-
-```powershell
-curl.exe -X POST "http://127.0.0.1:8000/api/analyze" -H "Content-Type: application/json" -d "{\"text\":\"Hi, can we meet tomorrow at 4 PM to discuss the project update?\",\"city\":\"Mumbai\"}"
-```
-
-Analyze job scam:
-
-```powershell
-curl.exe -X POST "http://127.0.0.1:8000/api/analyze" -H "Content-Type: application/json" -d "{\"text\":\"Hello, I came across your profile on LinkedIn and believe your experience aligns well with a remote Customer Support Specialist position. The salary is $60,000 per year. Do you want to hear more?\",\"city\":\"Mumbai\"}"
-```
-
-Analyze digital arrest scam:
-
-```powershell
-curl.exe -X POST "http://127.0.0.1:8000/api/analyze" -H "Content-Type: application/json" -d "{\"text\":\"CBI says you are under digital arrest. Pay 5000 to verifyfast@upi or call +91 9876543210 immediately. Visit rbi-verify-payment.com\",\"city\":\"Delhi\"}"
-```
-
-Frontend build:
-
-```powershell
-cd frontend
-npm run build
-```
-
-## Judging Criteria Alignment
 
 Relevance:
 - Directly addresses digital arrest scams, payment fraud, fake KYC, job scams, suspicious messages, and scam networks.
@@ -315,21 +260,6 @@ Impact and Scalability:
 - One report enriches future detection through graph intelligence.
 - Dataset and threat intelligence layers can later connect to verified official sources when available.
 
-## Limitations
-
-- The built-in CSV is a demo knowledge base, not an official government dataset.
-- OCR quality depends on screenshot clarity.
-- Rule-based classification can produce false positives or miss novel scam language.
-- In-memory fallback does not persist after backend restart.
-- Optional LLM classification is not used unless an API key is configured.
-
-## Future Scope
-
-- Connect verified sources such as I4C suspect repositories, Chakshu, and RBI Sachet when official access is available.
-- Add investigator workflow for entity review and case export.
-- Add multilingual OCR and scam pattern support.
-- Add PDF export for incident reports.
-- Add role-based authentication only when required for deployment.
 
 ## Screenshots
 
